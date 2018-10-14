@@ -1,2 +1,0 @@
-# GLUTeus
-CG Homework
