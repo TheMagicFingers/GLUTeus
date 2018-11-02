@@ -38,12 +38,12 @@ void display() {
 
 void getMouseClick(int botao, int status, int x, int y) {
 
-    coordinates c;
+    vertice v;
 
     if (botao == GLUT_LEFT_BUTTON) {
         if (status == GLUT_DOWN) {
-            c.x = x;
-            c.y = y;
+            v.x = x;
+            v.y = y;
             cout << "\n";
             cout << "X: " << c.x << "\n";
             cout << "Y: " << c.y << "\n";
