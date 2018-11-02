@@ -4,6 +4,6 @@ typedef struct vertice {
 }V;
 
 typedef struct aresta {
-    int p1;
-    int p2;
+    V p1;
+    V p2;
 }A;
