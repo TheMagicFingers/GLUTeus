@@ -13,6 +13,7 @@
 
 using namespace std;
 
+void savePolygon(V vertice);
 void display();
 void getMouseClick(int,int,int,int);
 
@@ -38,15 +39,21 @@ void display() {
 
 void getMouseClick(int botao, int status, int x, int y) {
 
-    vertice v;
+    V v;
 
     if (botao == GLUT_LEFT_BUTTON) {
         if (status == GLUT_DOWN) {
             v.x = x;
             v.y = y;
             cout << "\n";
-            cout << "X: " << c.x << "\n";
-            cout << "Y: " << c.y << "\n";
+            savePolygon(v);
+            //cout << "X: " << c.x << "\n";
+            //cout << "Y: " << c.y << "\n";
         }
     }
+}
+
+void savePolygon(V vertice) {
+    cout << "X: " << vertice.x << "\n";
+    cout << "Y: " << vertice.y << "\n";
 }

@@ -1,9 +1,9 @@
-struct vertice {
+typedef struct vertice {
     int x;
     int y;
-};
+}V;
 
-struct aresta {
+typedef struct aresta {
     int p1;
     int p2;
-};
+}A;
