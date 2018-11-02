@@ -9,16 +9,12 @@
 #include <stdlib.h>
 #include <iostream>
 #include <stack>
+#include "structs.h"
 
 using namespace std;
 
 void display();
 void getMouseClick(int,int,int,int);
-
-struct coordinates {
-    int x;
-    int y;
-} ;
 
 int main(int argc, char *argv[]) {
 
