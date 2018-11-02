@@ -13,13 +13,11 @@
 
 using namespace std;
 
-void desenha(void);
+A aresta;
 void savePolygon(V vertice, A aresta);
 void display(void);
 void getMouseClick(int,int,int,int);
-
-//Flags
-bool fill = false, posfound = false, theend = false, delpos = false;
+void desenha(void);
 
 int main(int argc, char *argv[]) {
 
@@ -28,70 +26,13 @@ int main(int argc, char *argv[]) {
     glutInitWindowSize(400, 400);
     glutInitWindowPosition(10,10);
     glutCreateWindow("Editor de Poligonos 2D");
-    glutDisplayFunc(desenha);
+    glClearColor(0, 0, 0, 0);
+    glutDisplayFunc(display);
     glutMouseFunc(getMouseClick);
-
+    glutMouseFunc(desenha);
     glutMainLoop();
 
     return 0;
-}
-
-void desenha(void) {
-	//Limpa a janela de visualização com a cor de fundo especificada
-	glClear(GL_COLOR_BUFFER_BIT);
-
-    //Só pode adicionar ou deletar uma posição, se não tiver chegado ao fim ainda.
-    if(theend == false) {
-		posfound = false;
-		if(delpos == true) {
-			for(int i=0;i<=100 && posfound == false;i++) {
-				if(posx[i] == 0 && posy[i] == 0) {
-					//Se o i atual é vazio, o anterior não era. Vamos zerá-lo então:
-					posx[i-1] = 0;
-					posy[i-1] = 0;
-					//Zerando também o penúltimo vértice, pra deletar o segmento que vai de um vértice a outro
-					posx[i-2] = 0;
-					posy[i-2] = 0;
-					posfound = true;
-				}
-			}
-			delpos = false;
-		}
-		//Percorre os arrays para adicionar próximo vértice
-		for(int i=0;i<=100 && posfound == false;i++) {
-			if(posx[i] == 0 && posy[i] == 0) {
-				posx[i] = xm;
-				posy[i] = ym;
-				posfound = true; //Posição vazia encontrada e valores adicionados. Sai do For.
-			}
-		}
-	}
-
-	if(theend == false) {
-		glColor3f(0.0f, 0.0f, 0.0f);
-		glBegin(GL_LINE_STRIP);
-	} else {
-		glLoadIdentity();
-		glTranslatef(dx, dy, 0.0f);
-		glScalef(escala, escala, 0.0f);
-		glTranslatef(0.0f, -20.0f, 0.0f);
-		glRotatef(angulo, 0.0f, 0.0f, 1.0f);
-		glTranslatef(0.0f, 20.0f, 0.0f);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glBegin(fill ? GL_POLYGON : GL_LINE_LOOP);
-	}
-
-	//Desenhando...
-    for(int i=0;i<=100 && posx[i] != 0 && posy[i] != 0;i++) {
-		glVertex2i(posx[i], posy[i]);
-	}
-	glEnd();
-	glLoadIdentity();
-
-	//Executa os comandos OpenGL
-	glFlush();
-
-    glLoadIdentity();
 }
 
 void display() {
@@ -99,18 +40,31 @@ void display() {
     glFlush();
 }
 
+void desenha(void){
+  int i;
+  glClear(GL_COLOR_BUFFER_BIT);
+  glColor3f (0.0, 0.0, 0.0);
+  glBegin(GL_LINES);
+  glVertex2i(40,200);  glVertex2i(200,10);
+  glEnd();
+  glFlush();
+}
+
 void getMouseClick(int botao, int status, int x, int y) {
 
-    V vertice;
-    A aresta;
-
+    int i = 0;
     if (botao == GLUT_LEFT_BUTTON) {
         if (status == GLUT_DOWN) {
+            V vertice;
             vertice.x = x;
             vertice.y = y;
-            cout << "\n";
-            aresta.p1 = vertice;
-            savePolygon(vertice, aresta);
+            i++
+            if (i == 1)
+                aresta.p1 = V;
+            if (i == 2)
+                aresta.p2 = V
+
+            //savePolygon(vertice, aresta);
             //cout << "X: " << c.x << "\n";
             //cout << "Y: " << c.y << "\n";
         }
@@ -119,6 +73,7 @@ void getMouseClick(int botao, int status, int x, int y) {
 
 void savePolygon(V vertice, A aresta) {
     // TODO: save polygon to file
+    cout << "\n";
     cout << "X: " << vertice.x << "\n";
     cout << "Y: " << vertice.y << "\n";
 }
