@@ -61,3 +61,28 @@ int main(int argc, char **argv){
     return EXIT_SUCCESS ;
 
 }
+
+void display(){/*Função responsável por plotar na tela*/
+  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  cabecalho();
+  glPointSize(8.0); /*Define o tamanho do ponto*/
+  glLineWidth(4); /*Define a espessura da linha*/
+
+  glBegin(GL_LINE_STRIP); /*GL_LINE_STRIP responsável por liga os pontos por uma linha reta*/
+    glColor3f(1.0,1.0,1.0);/*Define a cor das linhas*/
+    for(int i = 0; i<cont-1; i++){
+      glVertex2f(pontos[i].coordX,pontos[i].coordY); /*Responsável por plotar os pontos*/
+    }
+    if((cont>3) && (distancia_entre_pontos(pontos[0],pontos[cont-1]) < 0.05) && etapa == 1){ /*Verifica sempre se o último ponto escolhido está próximo do primeiro ponto do polígono*/
+      glVertex2f(pontos[0].coordX,pontos[0].coordY);/*Caso esteja, conecta ao primeiro ponto do polígino*/
+      etapa = 2; /*Ativa a etapa 2 e em seguida define o útimo ponto como sendo o primeiro*/
+      pontos[cont-1].coordX = pontos[0].coordX;
+      pontos[cont-1].coordY = pontos[0].coordY;
+    }else if(cont > 1){
+      glVertex2f(pontos[cont-1].coordX,pontos[cont-1].coordY); /*Responável por plotar o último ponto*/
+    }
+  glEnd();
+  glFlush();
+  glutSwapBuffers();
+}
