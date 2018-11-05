@@ -117,3 +117,19 @@ void keyboard_cb(unsigned char key, int X, int Y){
             break;
   }
 }
+
+ponto *resize(ponto *p, int Tamanho, int NovoTam){ /*Função responsável por redimensionar o tamanho na memória para os pontos*/
+  ponto *temp;
+  temp = p;
+  p = (ponto *) malloc (sizeof(ponto)*NovoTam);/*Aloca o novo espaço com o dobro da capacidade anterior */
+
+  for(int i = 0; i<Tamanho; i++){/*Passa os pontos existentes para o novo espaço alocado*/
+    p[i].coordX = temp[i].coordX;
+    p[i].coordY = temp[i].coordY;
+  }
+
+  tam = NovoTam; /*Atualiza a nova capacidade de pontos*/
+  free(temp); /*Libera o espaço alocado*/
+
+  return p; /*Retorna o endereço dos pontos com capacidade maior na memórai*/
+}
