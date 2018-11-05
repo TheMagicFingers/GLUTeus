@@ -41,3 +41,23 @@ int tam = 100; /*Tamanho do array que vai guardar os pontos, inicialmente começa
 int etapa = 1; /*Para controlar a etapa 1 (Construir o pílogono) e a etapa 2 (Escolher um ponto)*/
 ponto p; /*Ponto que será utilizado para descobrir a localização*/
 ponto *pontos = (ponto *) malloc (sizeof(ponto)*tam);/*Alocação de memória para o array de pontos*/
+
+int main(int argc, char **argv){
+
+  if(!pontos){ /*Verifica se a memória foi alocada para 'pontos'.*/
+          printf("Erro: Nao foi possível alocar memória.\n");
+          exit(1);
+        }
+
+    glutInit(&argc,argv); /*Esta função é utilizada para iniciar a biblioteca GLUT.*/
+    /*glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);*/
+    /*glutInitWindowPosition(200,200); *//*Posição da janela na tela*/
+    glutInitWindowSize (1280, 720); /*Tamanho da Janela*/
+    glutCreateWindow("Editor de Poligonos 2D"); /*Nome da Janela*/
+    glutKeyboardFunc(keyboard_cb);/*Função que será chamada quando ocorrer um evento no teclado*/
+    glutMouseFunc(mouse);/*Função que será chamada quando ocorrer um evento no mouse*/
+    glutDisplayFunc(display); /*Função que será chamada quando houver a necessidade de atualizar a janela*/
+    glutMainLoop(); /*Inicia o gerenciamento de eventos, aguardando que algum evento seja acionado.*/
+    return EXIT_SUCCESS ;
+
+}
