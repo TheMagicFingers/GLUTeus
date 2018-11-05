@@ -133,3 +133,31 @@ ponto *resize(ponto *p, int Tamanho, int NovoTam){ /*Função responsável por redi
 
   return p; /*Retorna o endereço dos pontos com capacidade maior na memórai*/
 }
+
+void cabecalho(){/*Função responsável por renderizar o cabeçalho*/
+  string trab = "  ----------------------------------------------------  Editor de Poligonos 2D  ----------------------------------------------------";
+
+  string comandos =  "Comandos: Botao Esquerdo do mouse desenha";
+  string linha = "______________________________________________________________________________________________________________________________________";
+
+  int len1 = (int)trab.length();
+
+  int len3 = (int)comandos.length();
+  int len4 = (int)linha.length();
+
+
+  glRasterPos2f(-1.0,0.9);/*Posição onde será renderizado da próxima vez que a função glutBitmapCharacter()*/
+  for (int i = 0; i < len1; i++) {
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,trab[i]); /*renderiza o conteúdo da string passada.*/
+  }
+
+  glRasterPos2f(-1.0,0.7);
+  for (int i = 0; i < len3; i++) {
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,comandos[i]);
+  }
+
+  glRasterPos2f(-1.0,0.68);
+  for (int i = 0; i < len4; i++) {
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,linha[i]);
+  }
+}
