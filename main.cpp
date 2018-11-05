@@ -24,3 +24,13 @@ typedef struct _vetor{ /*Estrutura que define um vetor, com os pontos inicial e 
   ponto p1; /*Origem do vetor*/
   ponto p2; /*Fim do vetor*/
 } vetor;
+
+/*Protótipos das funções utilizadas*/
+void display();
+void mouse(int button, int state, int X, int Y);
+void keyboard_cb(unsigned char key, int X, int Y);
+ponto *resize(ponto *p, int Tamanho, int NovoTam);
+void cabecalho();
+float distancia_entre_pontos(ponto p1, ponto p2);
+bool intersecao(vetor v1, vetor v2);
+float produto_vetorial(ponto p1, ponto p2);
