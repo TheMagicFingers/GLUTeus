@@ -104,3 +104,16 @@ void mouse(int button, int state, int X, int Y){
     printf("Poligono Finalizado");
   }
 }
+
+
+void keyboard_cb(unsigned char key, int X, int Y){
+    switch(key){
+        case 27:         /*27 corresponde ao ESC, e está sendo utilizado para sair*/
+            exit (0);
+            free(pontos); /*Libera o espaço alocado para os pontos*/
+            break;
+        case 'a':
+            printf("a");
+            break;
+  }
+}
