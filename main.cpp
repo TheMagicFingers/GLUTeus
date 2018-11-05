@@ -86,3 +86,21 @@ void display(){/*Função responsável por plotar na tela*/
   glFlush();
   glutSwapBuffers();
 }
+
+void mouse(int button, int state, int X, int Y){
+  if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && etapa == 1){
+    if(cont >= tam){/*Verifica se existe espaço para o novo ponto*/
+      pontos = resize(pontos,cont, tam*2);
+    }
+    pontos[cont].coordX = (float)(2.*X)/1280 - 1; /*Necessário converter as coordenadas*/
+    pontos[cont].coordY = (float)-(2.*Y)/720 + 1; /*Necessário converter as coordenadas*/
+    cont++;/*Contador de pontos existentes*/
+    glutPostRedisplay();/*Atualiza o frame chamando novamente a função display*/
+  }
+  if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && etapa == 2){
+    /*Caso a segunda etapa esteja ativa, nao e aceito mais o botao do mouse
+        podemos usar o ultimo clique para salvar o poligono
+    */
+    printf("Poligono Finalizado");
+  }
+}
