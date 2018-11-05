@@ -161,3 +161,7 @@ void cabecalho(){/*Função responsável por renderizar o cabeçalho*/
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,linha[i]);
   }
 }
+
+float distancia_entre_pontos(ponto p1, ponto p2){
+  return sqrt(pow(p1.coordX - p2.coordX,2)+pow(p1.coordY-p2.coordY,2)); /*Calcula a distância de ponto*/
+}
