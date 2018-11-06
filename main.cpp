@@ -113,7 +113,10 @@ void keyboard_cb(unsigned char key, int X, int Y){
             free(pontos); /*Libera o espaço alocado para os pontos*/
             break;
         case 'a':
-            printf("a");
+            printf("%d", cont);
+            for(int c = 0; c < cont-1; c++){
+                printf("X: %d\nY: %d\n", pontos[c].coordX, pontos[c].coordY);
+            }
             break;
   }
 }
