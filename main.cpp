@@ -32,6 +32,8 @@ void keyboard_cb(unsigned char key, int X, int Y);
 ponto *resize(ponto *p, int Tamanho, int NovoTam);
 void cabecalho();
 float distancia_entre_pontos(ponto p1, ponto p2);
+bool intersecao(vetor v1, vetor v2);
+float produto_vetorial(ponto p1, ponto p2);
 
 /*Variáveis globais*/
 int cont = 0; /*Cont é a quantidade de pontos existentes*/
