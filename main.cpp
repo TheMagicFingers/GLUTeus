@@ -44,6 +44,7 @@ int tam = 100; /*Tamanho do array que vai guardar os pontos, inicialmente começa
 int etapa = 1; /*Para controlar a etapa 1 (Construir o pílogono) e a etapa 2 (Escolher um ponto)*/
 ponto p; /*Ponto que será utilizado para descobrir a localização*/
 ponto *pontos = (ponto *) malloc (sizeof(ponto)*tam);/*Alocação de memória para o array de pontos*/
+void myTranslatef(float,float);
 
 int main(int argc, char **argv){
 
@@ -68,12 +69,12 @@ int main(int argc, char **argv){
 void display(){/*Função responsável por plotar na tela*/
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
-  //cabecalho();
   glPointSize(8.0); /*Define o tamanho do ponto*/
   glLineWidth(4); /*Define a espessura da linha*/
 
   glLoadIdentity();
   glTranslatef( pos_x, pos_y, 0.0 );
+  myTranslatef( pos_x, pos_y);
 
   glBegin(GL_LINE_STRIP); /*GL_LINE_STRIP responsável por liga os pontos por uma linha reta*/
     glColor3f(1.0,1.0,1.0);/*Define a cor das linhas*/
@@ -91,6 +92,14 @@ void display(){/*Função responsável por plotar na tela*/
   glEnd();
   glFlush();
   glutSwapBuffers();
+}
+
+void myTranslatef(float x, float y) {
+    int i;
+    for (i = 0; i < cont-1; i++) {
+        pontos[cont].coordX += x;
+        pontos[cont].coordY += y;
+    }
 }
 
 void mouse(int button, int state, int X, int Y){
@@ -154,34 +163,6 @@ ponto *resize(ponto *p, int Tamanho, int NovoTam){ /*Função responsável por redi
   free(temp); /*Libera o espaço alocado*/
 
   return p; /*Retorna o endereço dos pontos com capacidade maior na memórai*/
-}
-
-void cabecalho(){/*Função responsável por renderizar o cabeçalho*/
-  string trab = "  ----------------------------------------------------  Editor de Poligonos 2D  ----------------------------------------------------";
-
-  string comandos =  "Comandos: Botao Esquerdo do mouse desenha";
-  string linha = "______________________________________________________________________________________________________________________________________";
-
-  int len1 = (int)trab.length();
-
-  int len3 = (int)comandos.length();
-  int len4 = (int)linha.length();
-
-
-  glRasterPos2f(-1.0,0.9);/*Posição onde será renderizado da próxima vez que a função glutBitmapCharacter()*/
-  for (int i = 0; i < len1; i++) {
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,trab[i]); /*renderiza o conteúdo da string passada.*/
-  }
-
-  glRasterPos2f(-1.0,0.7);
-  for (int i = 0; i < len3; i++) {
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,comandos[i]);
-  }
-
-  glRasterPos2f(-1.0,0.68);
-  for (int i = 0; i < len4; i++) {
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,linha[i]);
-  }
 }
 
 float distancia_entre_pontos(ponto p1, ponto p2){
