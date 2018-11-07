@@ -34,7 +34,6 @@ void cabecalho();
 float distancia_entre_pontos(ponto p1, ponto p2);
 
 float pos_x, pos_y;
-double rotate_y=0,rotate_x=0,rotate_z=0;
 
 int maxWH = 1280;
 int maxHT = 720;
@@ -92,10 +91,6 @@ void display(){/*Função responsável por plotar na tela*/
   glEnd();
   glFlush();
   glutSwapBuffers();
-}
-
-void myTranslatef(float px, float py, float pz) {
-
 }
 
 void mouse(int button, int state, int X, int Y){
