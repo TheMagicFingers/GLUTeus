@@ -33,7 +33,7 @@ ponto *resize(ponto *p, int Tamanho, int NovoTam);
 void cabecalho();
 float distancia_entre_pontos(ponto p1, ponto p2);
 
-float pos_x, pos_y;
+float pos_x = 0, pos_y = 0;
 
 int maxWH = 1280;
 int maxHT = 720;
@@ -44,7 +44,7 @@ int tam = 100; /*Tamanho do array que vai guardar os pontos, inicialmente começa
 int etapa = 1; /*Para controlar a etapa 1 (Construir o pílogono) e a etapa 2 (Escolher um ponto)*/
 ponto p; /*Ponto que será utilizado para descobrir a localização*/
 ponto *pontos = (ponto *) malloc (sizeof(ponto)*tam);/*Alocação de memória para o array de pontos*/
-void myTranslatef(float,float);
+void myTranslatef(ponto *p, float,float);
 
 int main(int argc, char **argv){
 
@@ -73,10 +73,11 @@ void display(){/*Função responsável por plotar na tela*/
   glLineWidth(4); /*Define a espessura da linha*/
 
   glLoadIdentity();
-  glTranslatef( pos_x, pos_y, 0.0 );
-  myTranslatef( pos_x, pos_y);
+  //glTranslatef( pos_x, pos_y, 0.0 );
+    myTranslatef(pontos, pos_x, pos_y);
 
   glBegin(GL_LINE_STRIP); /*GL_LINE_STRIP responsável por liga os pontos por uma linha reta*/
+
     glColor3f(1.0,1.0,1.0);/*Define a cor das linhas*/
     for(int i = 0; i<cont-1; i++){
       glVertex2f(pontos[i].coordX,pontos[i].coordY); /*Responsável por plotar os pontos*/
@@ -94,12 +95,16 @@ void display(){/*Função responsável por plotar na tela*/
   glutSwapBuffers();
 }
 
-void myTranslatef(float x, float y) {
-    int i;
-    for (i = 0; i < cont-1; i++) {
-        pontos[cont].coordX += x;
-        pontos[cont].coordY += y;
+void myTranslatef(ponto *p, float x, float y) {
+
+
+    for(int i = 0; i<cont; i++){/*Passa os pontos existentes para o novo espaço alocado*/
+        if (!(p[i].coordX + x > maxWH && p[i].coordY + y > maxHT)) {
+            p[i].coordX += x;
+            p[i].coordY += y;
+        }
     }
+
 }
 
 void mouse(int button, int state, int X, int Y){
@@ -140,9 +145,11 @@ void keyboard_cb(unsigned char key, int X, int Y){
             pos_x += 0.1;
             break;
         case 'w':
+            pos_x = 0.0;
             pos_y += 0.1;
             break;
         case 's':
+            pos_x = 0.0;
             pos_y -= 0.1;
             break;
   }
