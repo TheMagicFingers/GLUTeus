@@ -32,8 +32,12 @@ void keyboard_cb(unsigned char key, int X, int Y);
 ponto *resize(ponto *p, int Tamanho, int NovoTam);
 void cabecalho();
 float distancia_entre_pontos(ponto p1, ponto p2);
-bool intersecao(vetor v1, vetor v2);
-float produto_vetorial(ponto p1, ponto p2);
+
+float pos_x, pos_y;
+double rotate_y=0,rotate_x=0,rotate_z=0;
+
+int maxWH = 1280;
+int maxHT = 720;
 
 /*Variáveis globais*/
 int cont = 0; /*Cont é a quantidade de pontos existentes*/
@@ -50,9 +54,9 @@ int main(int argc, char **argv){
         }
 
     glutInit(&argc,argv); /*Esta função é utilizada para iniciar a biblioteca GLUT.*/
-    /*glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);*/
+    /*glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     /*glutInitWindowPosition(200,200); *//*Posição da janela na tela*/
-    glutInitWindowSize (1280, 720); /*Tamanho da Janela*/
+    glutInitWindowSize (maxWH, maxHT); /*Tamanho da Janela*/
     glutCreateWindow("Editor de Poligonos 2D"); /*Nome da Janela*/
     glutKeyboardFunc(keyboard_cb);/*Função que será chamada quando ocorrer um evento no teclado*/
     glutMouseFunc(mouse);/*Função que será chamada quando ocorrer um evento no mouse*/
@@ -65,9 +69,12 @@ int main(int argc, char **argv){
 void display(){/*Função responsável por plotar na tela*/
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
-  cabecalho();
+  //cabecalho();
   glPointSize(8.0); /*Define o tamanho do ponto*/
   glLineWidth(4); /*Define a espessura da linha*/
+
+  glLoadIdentity();
+  glTranslatef( pos_x, pos_y, 0.0 );
 
   glBegin(GL_LINE_STRIP); /*GL_LINE_STRIP responsável por liga os pontos por uma linha reta*/
     glColor3f(1.0,1.0,1.0);/*Define a cor das linhas*/
@@ -87,6 +94,10 @@ void display(){/*Função responsável por plotar na tela*/
   glutSwapBuffers();
 }
 
+void myTranslatef(float px, float py, float pz) {
+
+}
+
 void mouse(int button, int state, int X, int Y){
   if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && etapa == 1){
     if(cont >= tam){/*Verifica se existe espaço para o novo ponto*/
@@ -101,7 +112,7 @@ void mouse(int button, int state, int X, int Y){
     /*Caso a segunda etapa esteja ativa, nao e aceito mais o botao do mouse
         podemos usar o ultimo clique para salvar o poligono
     */
-    printf("Poligono Finalizado");
+    //printf("Poligono Finalizado");
   }
 }
 
@@ -112,13 +123,26 @@ void keyboard_cb(unsigned char key, int X, int Y){
             exit (0);
             free(pontos); /*Libera o espaço alocado para os pontos*/
             break;
-        case 'a':
+        case 'f':
             printf("%d", cont);
             for(int c = 0; c < cont-1; c++){
                 printf("X: %d\nY: %d\n", pontos[c].coordX, pontos[c].coordY);
             }
             break;
+        case 'a':
+            pos_x -= 0.1;
+            break;
+        case 'd':
+            pos_x += 0.1;
+            break;
+        case 'w':
+            pos_y += 0.1;
+            break;
+        case 's':
+            pos_y -= 0.1;
+            break;
   }
+  glutPostRedisplay();
 }
 
 ponto *resize(ponto *p, int Tamanho, int NovoTam){ /*Função responsável por redimensionar o tamanho na memória para os pontos*/
