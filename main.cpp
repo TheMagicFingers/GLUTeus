@@ -34,6 +34,7 @@ void cabecalho();
 float distancia_entre_pontos(ponto p1, ponto p2);
 
 float pos_x = 0, pos_y = 0;
+float scale_x = 0, scale_y = 0;
 
 int maxWH = 1280;
 int maxHT = 720;
@@ -45,6 +46,7 @@ int etapa = 1; /*Para controlar a etapa 1 (Construir o pílogono) e a etapa 2 (Es
 ponto p; /*Ponto que será utilizado para descobrir a localização*/
 ponto *pontos = (ponto *) malloc (sizeof(ponto)*tam);/*Alocação de memória para o array de pontos*/
 void myTranslatef(ponto *p, float,float);
+void myScale(ponto *p, float, float);
 
 int main(int argc, char **argv){
 
@@ -75,7 +77,7 @@ void display(){/*Função responsável por plotar na tela*/
   glLoadIdentity();
   //glTranslatef( pos_x, pos_y, 0.0 );
     myTranslatef(pontos, pos_x, pos_y);
-
+    //myScale(pontos, scale_x, scale_y);
   glBegin(GL_LINE_STRIP); /*GL_LINE_STRIP responsável por liga os pontos por uma linha reta*/
 
     glColor3f(1.0,1.0,1.0);/*Define a cor das linhas*/
@@ -98,13 +100,20 @@ void display(){/*Função responsável por plotar na tela*/
 void myTranslatef(ponto *p, float x, float y) {
 
 
-    for(int i = 0; i<cont; i++){/*Passa os pontos existentes para o novo espaço alocado*/
-        if (!(p[i].coordX + x > maxWH && p[i].coordY + y > maxHT)) {
+    for(int i = 0; i<cont; i++){
+        if (!(p[i].coordX + x > maxWH || p[i].coordY + y > maxHT)) {
             p[i].coordX += x;
             p[i].coordY += y;
         }
     }
 
+}
+
+void myScale(ponto *p, float x, float y) {
+    for(int i = 0; i<cont; i++){
+        p[i].coordX *= x;
+        p[i].coordY *= y;
+    }
 }
 
 void mouse(int button, int state, int X, int Y){
@@ -151,6 +160,10 @@ void keyboard_cb(unsigned char key, int X, int Y){
         case 's':
             pos_x = 0.0;
             pos_y -= 0.1;
+            break;
+        case 'm':
+            scale_x += 0.1;
+            scale_y += 0.1;
             break;
   }
   glutPostRedisplay();
